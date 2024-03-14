@@ -9,7 +9,7 @@ router.post("/register", async (req, res, next) => {
     await user.register();
     res.status(201).send(user);
   } catch (e) {
-    next(e);
+    next(e); // Error sink
   }
 });
 
@@ -19,6 +19,6 @@ router.post("/login", async (req, res, next) => {
     const token = await user.loginAndGenerateToken();
     res.status(200).send(token);
   } catch (e) {
-    next(e);
+    next(e); // Error sink
   }
 });

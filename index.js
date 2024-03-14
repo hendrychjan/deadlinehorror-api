@@ -15,5 +15,5 @@ routerConfig(app);
 dbConnect();
 
 app.listen(port, () => {
-  console.log(`Express is listening at http://localhost:${port}`);
+  console.log(`[INFO] Express is listening at http://localhost:${port}`);
 });

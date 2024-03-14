@@ -7,9 +7,7 @@ import { Deadline } from "../models/deadline.js";
 export const router = Router();
 
 router.get("/", auth, async (req, res) => {
-  console.log(req.user.id);
   const user = await User.findById(req.user.id).populate("deadlines");
-  console.log(user);
   res.send(user.deadlines ?? []);
 });
 
@@ -20,6 +18,7 @@ router.post("/", auth, async (req, res, next) => {
     await deadline.create();
     res.status(201).send(deadline);
   } catch (e) {
+    console.log(typeof e);
     next(e); // Error sink
   }
 });

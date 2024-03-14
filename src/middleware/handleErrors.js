@@ -4,8 +4,6 @@ import PayloadError from "../errors/payloadError.js";
 import NotFoundError from "../errors/notFoundError.js";
 
 export const handleErrors = (err, req, res, next) => {
-  console.error(err);
-
   // Initially set the status code to 500
   let statusCode = 500;
 
@@ -29,7 +27,9 @@ export const handleErrors = (err, req, res, next) => {
 
   if (statusCode === 500) {
     res.send("Something went wrong.");
+    console.error("[SYSTEM ERROR] " + err);
   } else {
     res.send(err.message);
+    console.error("[CLIENT ERROR] " + err);
   }
 };
