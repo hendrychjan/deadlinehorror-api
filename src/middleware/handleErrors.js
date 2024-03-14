@@ -1,5 +1,7 @@
 import AuthenticationError from "../errors/authenticationError.js";
+import AuthorizationError from "../errors/authorizationError.js";
 import PayloadError from "../errors/payloadError.js";
+import NotFoundError from "../errors/notFoundError.js";
 
 export const handleErrors = (err, req, res, next) => {
   console.error(err);
@@ -13,6 +15,14 @@ export const handleErrors = (err, req, res, next) => {
 
   if (err instanceof AuthenticationError) {
     statusCode = 401;
+  }
+
+  if (err instanceof AuthorizationError) {
+    statusCode = 403;
+  }
+
+  if (err instanceof NotFoundError) {
+    statusCode = 404;
   }
 
   res.status(statusCode);

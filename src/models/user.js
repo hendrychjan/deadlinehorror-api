@@ -13,6 +13,12 @@ const userSchema = mongoose.Schema({
     type: String,
     required: true,
   },
+  deadlines: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Deadline",
+    },
+  ],
 });
 
 userSchema.statics.hashPassword = function hashPassword(password) {
@@ -33,20 +39,21 @@ userSchema.statics.authenticate = function authenticate(token) {
   }
 
   return jwt.decode(token);
-}
+};
 
-userSchema.methods.loginAndGenerateToken = async function loginAndGenerateToken() {
-  const user = await User.findOne({ name: this.name });
-  if (!user) {
-    throw new AuthenticationError("Invalid username or password");
-  }
+userSchema.methods.loginAndGenerateToken =
+  async function loginAndGenerateToken() {
+    const user = await User.findOne({ name: this.name });
+    if (!user) {
+      throw new AuthenticationError("Invalid username or password");
+    }
 
-  if (!User.checkPassword(this.password, user.password)) {
-    throw new AuthenticationError("Invalid username or password");
-  }
+    if (!User.checkPassword(this.password, user.password)) {
+      throw new AuthenticationError("Invalid username or password");
+    }
 
-  return jwt.sign({ name: this.name }, process.env.JWT_SECRET);
-}
+    return jwt.sign({ id: user._id, name: this.name }, process.env.JWT_SECRET);
+  };
 
 userSchema.methods.register = async function register() {
   const duplicate = await User.findOne({ name: this.name });
