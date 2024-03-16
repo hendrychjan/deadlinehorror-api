@@ -13,6 +13,11 @@ const deadlineSchema = mongoose.Schema({
     type: String,
     required: false,
   },
+  assignedDate: {
+    type: Date,
+    default: Date.now,
+    required: true,
+  },
   dueDate: {
     type: Date,
     required: true,
