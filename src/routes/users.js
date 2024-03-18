@@ -6,8 +6,10 @@ export const router = Router();
 router.post("/register", async (req, res, next) => {
   try {
     const user = new User(req.body);
-    await user.register();
-    res.status(201).send(user);
+    const registered = await user.register({
+      sendToken: req.query.sendToken.toString() === "true",
+    });
+    res.status(201).send(registered);
   } catch (e) {
     next(e); // Error sink
   }

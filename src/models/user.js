@@ -21,6 +21,10 @@ const userSchema = mongoose.Schema({
   ],
 });
 
+function generateToken(userId, userName) {
+  return jwt.sign({ id: userId, name: userName }, process.env.JWT_SECRET);
+}
+
 userSchema.statics.hashPassword = function hashPassword(password) {
   return bcrypt.hashSync(password, Number(process.env.SALT_ROUNDS));
 };
@@ -52,10 +56,10 @@ userSchema.methods.loginAndGenerateToken =
       throw new AuthenticationError("Invalid username or password");
     }
 
-    return jwt.sign({ id: user._id, name: this.name }, process.env.JWT_SECRET);
+    return generateToken(user._id, this.name);
   };
 
-userSchema.methods.register = async function register() {
+userSchema.methods.register = async function register({sendToken = false}) {
   const duplicate = await User.findOne({ name: this.name });
 
   if (duplicate) {
@@ -64,7 +68,13 @@ userSchema.methods.register = async function register() {
 
   this.password = User.hashPassword(this.password);
 
-  return this.save();
+  const newUser = await this.save();
+
+  if (sendToken) {
+    return generateToken(newUser._id, this.name);
+  } else {
+    return newUser;
+  }
 };
 
 export const User = mongoose.model("User", userSchema);
