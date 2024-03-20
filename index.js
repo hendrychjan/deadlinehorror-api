@@ -6,7 +6,7 @@ import { config as routerConfig } from "./src/startup/router.js";
 import { connect as dbConnect } from "./src/startup/db.js";
 
 const app = express();
-const port = process.env.PORT || 3010;
+const port = process.env.PORT || 3000;
 
 // Load startup configs
 envConfig();
