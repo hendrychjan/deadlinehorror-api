@@ -38,5 +38,5 @@ docker run -P -d [-e <ENV NAME>=<env value>] <image name>
 #### Environment variables
 | Variable | Meaning |     |
 | -------- | ------- | --- |
-| `API_MONGO_URL` | A connection string to a mongodb instance | **required** |
-| `API_JWT_SECRET` | A string secret used for jwt token signing | **required** |
+| `MONGO_URL` | A connection string to a mongodb instance | **required** |
+| `JWT_SECRET` | A string secret used for jwt token signing | **required** |
