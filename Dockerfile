@@ -8,7 +8,7 @@ ARG NODE_VERSION=20.10.0
 FROM node:${NODE_VERSION}-alpine
 
 # Load build arguments
-ARG APP_PORT=3000
+ARG API_PORT=3000
 ARG API_MORGAN_FORMAT="tiny"
 ARG API_SALT_ROUNDS=10
 
@@ -36,7 +36,7 @@ USER node
 COPY . .
 
 # Expose the port that the application listens on.
-EXPOSE $APP_PORT
+EXPOSE $API_PORT
 
 # Run the application.
 CMD npm start

@@ -4,7 +4,7 @@ A REST API for Deadline horror.
 
 ## Docker
 
-An option to containerize the app standalone is provided. You can use the instructions below to create and run it as a docker image.
+An option to containerize the api standalone is provided. You can use the instructions below to create and run it as a docker image.
 
 > The entire Deadline horror stack is containerized (and a built image is provided) as a whole as well:
 >
@@ -27,9 +27,14 @@ You can specify any of the build arguments below, the rest will use their repsec
 | -------- | ------------- | ------- | --- |
 | `API_MORGAN_FORMAT` | _tiny_ | The log format for [morgan](https://www.npmjs.com/package/morgan) | _optional_ |
 | `API_SALT_ROUNDS` | _10_ | The number of salt rounds to use for password hashing | _optional_ |
-| `APP_PORT` | _3000_                  | A port at which the app will listen on (internally, inside the container) |
+| `API_PORT` | _3000_ | A port at which the app will listen on (internally, inside the container) | _optional_ |
 | `API_MONGO_URL` | - | A connection string to a mongodb instance | **required** |
 | `API_JWT_SECRET` | - | A string secret used for jwt token signing | **required** |
+
+#### Environment variables
+| Variable | Meaning |
+| -------- | ------- |
+| `MONGO_URL` | A URL to a mongodb instance |
 
 ### Run
 
