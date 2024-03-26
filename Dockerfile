@@ -7,16 +7,11 @@ ARG NODE_VERSION=20.10.0
 # Set working directory for all build stages.
 FROM node:${NODE_VERSION}-alpine
 
-# Load build arguments
-ARG API_PORT=3000
-ARG API_MORGAN_FORMAT="tiny"
-ARG API_SALT_ROUNDS=10
+# Load build arguments and set the env
+ARG APP_PORT=3000
 
-# Set the environment
 ENV NODE_ENV production
 ENV PORT $APP_PORT
-ENV MORGAN_FORMAT $API_MORGAN_FORMAT
-ENV SALT_ROUNDS $API_SALT_ROUNDS
 
 # Set working directory for all build stages.
 WORKDIR /usr/src/app
@@ -36,7 +31,7 @@ USER node
 COPY . .
 
 # Expose the port that the application listens on.
-EXPOSE $API_PORT
+EXPOSE $APP_PORT
 
 # Run the application.
 CMD npm start

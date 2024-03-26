@@ -1,0 +1,21 @@
+services:
+  api:
+    build:
+      context: ./
+      args:
+        APP_PORT: 3000
+    environment:
+      MORGAN_FORMAT: ${MORGAN_FORMAT}
+      SALT_ROUNDS: ${SALT_ROUNDS}
+      MONGO_URL: mongodb://mongo:27017/deadlinehorror?retryWrites=true&w=majority
+      JWT_SECRET: ${JWT_SECRET}
+    ports:
+      - ${PORT}:3000
+  mongo:
+    image: mongo
+    volumes:
+      - deadlinehorror_db:/data/db
+    ports:
+      - 27017
+volumes:
+  deadlinehorror_db:
